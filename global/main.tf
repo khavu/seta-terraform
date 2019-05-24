@@ -143,10 +143,10 @@ resource "aws_instance" "test" {
                                 yum install -y epel-release
                                 yum install -y ansible git
                                 cd ~
-                                echo "${aws_efs_file_system.test_efs.dns_name}" >> mount_point.txt
+                                echo "${aws_efs_file_system.test_efs.dns_name}" >> efs_dns_name.txt
                                 git clone "https://github.com/khavu/seta-ansible.git"
                                 cd seta-ansible
-                                ansible-playbook -K playbook.yml
+                                ansible-playbook playbook.yml --extra-vars "efs_dns_name=${aws_efs_file_system.test_efs.dns_name}"
                                 EOF
   associate_public_ip_address = true
   tags {
